@@ -1,20 +1,3 @@
-// =============================================================
-// routes/categorias.js — Rotas de Categorias
-// =============================================================
-// O que são Rotas?
-//   Rotas definem os "endereços" da nossa API e o que acontece
-//   quando alguém acessa cada endereço.
-//
-// O que é um Router?
-//   O express.Router() cria um mini-aplicativo Express com suas
-//   próprias rotas. Assim mantemos o código organizado em arquivos
-//   separados, em vez de colocar tudo no server.js.
-//
-// Prefixo de rotas:
-//   No server.js, registramos este router em '/api/categorias'.
-//   Então uma rota '/' aqui vira '/api/categorias' na URL final.
-// =============================================================
-
 const express = require('express');
 
 // ─── Criação do Router ────────────────────────────────────────
@@ -25,7 +8,7 @@ const router = express.Router();
 // Importamos o objeto com os arrays de categorias e produtos.
 // '../' volta uma pasta (de /routes para /aula6-backend)
 // 'data/database' aponta para o nosso arquivo de banco de dados
-const db = require('../data/database');
+const supabase = require('../data/supabase');
 
 // ─── [GET] /api/categorias ────────────────────────────────────
 // Retorna a lista completa de categorias do cardápio.
@@ -36,10 +19,22 @@ const db = require('../data/database');
 //
 // Resposta esperada:
 //   [ { "id": 1, "nome": "Combinados" }, { "id": 2, "nome": "Temakis" }, ... ]
-router.get('/', (req, res) => {
+router.get('/', async (req, res, next) => {
     // db.categorias é o array de categorias do nosso banco em memória.
     // res.json() converte o array para JSON e envia como resposta.
-    res.json(db.categorias);
+   try{
+    const { data, error} = await supabase
+    .from ('categorias')
+    .select('*')
+    .order('id', {ascending: true});
+
+   if (error){
+    throw error;
+   }
+   res.json(data);
+}catch (err){
+    next(err);
+}
 });
 
 // ─── [POST] /api/categorias ───────────────────────────────────
@@ -52,20 +47,63 @@ router.get('/', (req, res) => {
 //
 // Resposta esperada (status 201 Created):
 //   { "id": 4, "nome": "Sobremesas" }
-router.post('/', (req, res) => {
-    // Criamos um novo objeto de categoria.
-    // O ID é calculado automaticamente: tamanho do array + 1
-    const novaCategoria = {
-        id: db.categorias.length + 1,
-        nome: req.body.nome       // req.body.nome vem do JSON enviado pelo cliente
-    };
-
-    // Adicionamos a nova categoria ao array (nosso "banco de dados")
-    db.categorias.push(novaCategoria);
-
-    // Respondemos com status 201 (Created) e os dados da nova categoria
-    res.status(201).json(novaCategoria);
+router.post('/', async (req, res, next) => {
+    // db.categorias é o array de categorias do nosso banco em memória.
+    // res.json() converte o array para JSON e envia como resposta.
+   try{
+    const { data, error} = await supabase
+    .from ('categorias')
+    .insert([{nome: req.body.nome}])
+    .select();
+    
+   if (error) throw error;
+   
+   res.status(201).json(data[0]);
+}catch (err){
+    next(err);
+}
 });
+
+router.put('/:id', async (req, res, next) => {
+    // db.categorias é o array de categorias do nosso banco em memória.
+    // res.json() converte o array para JSON e envia como resposta.
+   try{
+     const { id } = req.params;
+    const { data, error} = await supabase
+    .from ('categorias')
+    .update([{nome: req.body.nome}])
+     .eq ('id', id)
+    .select();
+    
+   if (error) throw error;
+
+   if (data && data.length > 0){
+     res.json(data[0]);
+   }else{
+    res.status(404).json({mensagem: 'Categoia não encontrada para atualizar'});
+   }
+  
+} catch (err) {
+    next(err);
+}
+});
+
+
+router.delete('/:id', async (req, res, next) => {
+    try{
+        const { id } = req.params;
+        const { error } = await supabase
+        .from('categorias')
+        .delete()
+        .eq('id', id);
+    if (error) throw error;
+
+    res.json({ mensagem: 'Categoria deletada com sucesso!'});
+    } catch (err) {
+        next(err);
+    }
+});
+
 
 // ─── Exportação do Router ─────────────────────────────────────
 // Exportamos o router para ser usado no server.js
