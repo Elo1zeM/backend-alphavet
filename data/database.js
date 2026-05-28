@@ -7,6 +7,7 @@ let categorias = [
 let produtos = [
     //medicamentos
     {
+        id: 1,
         categoriaId: 1,
         nome: 'Bravecto – Antipulgas e Carrapatos',
         descricao: "Medicamento parasiticida que protege cães contra pulgas e carrapatos por 3 meses com uma única dose.",
@@ -14,6 +15,7 @@ let produtos = [
         imagem: 'https://http2.mlstatic.com/D_643289-MLB51992761630_102022-C.jpg'
     },
     {
+        id: 2,
         categoriaId: 1,
         nome: 'Prediderm 5 mg',
         descricao: "Anti‑inflamatório para cães, usado para aliviar dor e inflamação em músculos e articulações.",
@@ -21,6 +23,7 @@ let produtos = [
         imagem: 'https://images.petz.com.br/fotos/1612369843970.jpg'
     },
     {
+        id: 3,
         categoriaId: 1,
         nome: 'Furolisin 10 Comprimidos',
         descricao: "Diurético usado em alguns casos veterinários para auxiliar no controle de retenção de líquidos conforme prescrição.",
@@ -28,6 +31,7 @@ let produtos = [
         imagem: 'https://cobasi.vteximg.com.br/arquivos/ids/947028-368-368'
     },
     {
+        id: 4,
         categoriaId: 1,
         nome: 'Suplemento Beneflora Vet Avert',
         descricao: "Suplemento probiótico para saúde intestinal de cães e gatos (não é medicamento curativo, mas auxilia no equilíbrio da microbiota).",
@@ -37,6 +41,7 @@ let produtos = [
 
     //cirurgias
     {
+        id: 5,
         categoriaId: 2,
         nome: 'Castração',
         descricao: "Pacote Cirúrgico: Avaliação pré‑anestésica, Anestesia geral, Antibióticos e analgésicos pós‑operatórios",
@@ -44,6 +49,7 @@ let produtos = [
         imagem: 'https://cobasi.vteximg.com.br/arquivos/ids/302772/Roupa-Pos-Cirurgica-para-Caes-Machos-Castracao-Azul-Pet-Med-2.jpg?v=638888051443630000'
     },
     {
+        id: 6,
         categoriaId: 2,
         nome: 'Cesárea',
         descricao: "Pacote Cirúrgico: Avaliação pré‑anestésica, Anestesia geral, Antibióticos e analgésicos pós‑operatórios",
@@ -51,6 +57,7 @@ let produtos = [
         imagem: 'https://cobasi.vteximg.com.br/arquivos/ids/302772/Roupa-Pos-Cirurgica-para-Caes-Machos-Castracao-Azul-Pet-Med-2.jpg?v=638888051443630000'
     },
     {
+        id: 7,
         categoriaId: 2,
         nome: 'Cirurgia de Obstrução',
         descricao: "Exames de imagem, Avaliação e preparo anestésico, Anestesia geral, Antibióticos e analgésicos",
@@ -60,6 +67,7 @@ let produtos = [
 
     //petiscos
     {
+        id: 8,
         categoriaId: 3,
         nome: 'Vet Snack Weight Control 85g',
         descricao: "Petisco de baixa caloria desenhado especialmente para controle de peso, ideal para cães com tendência à obesidade ou em dieta.",
@@ -67,6 +75,7 @@ let produtos = [
         imagem: 'https://www.happydoguk.com/cdn/shop/files/VET_Snack_HD_Skin_853b8e81-5b46-4757-b4e8-b710e437313f_1080x.jpg?v=1741192407'
     },
     {
+        id: 9,
         categoriaId: 3,
         nome: 'Dog Treat Naturals Superfood Sticks',
         descricao: "Petiscos naturais com superfoods (ex.: batata‑doce, quinoa), ricos em nutrientes e antioxidantes — boa escolha para petisco fit e saudável.s",
